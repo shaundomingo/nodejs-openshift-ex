@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: nodejs-openshift-ex
+  name: nodejs-openshift-ex
+  namespace: nodejs-demo
+spec:
+  replicas: 2
+  selector:
+    app: nodejs-openshift-ex
+    deploymentconfig: nodejs-openshift-ex
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: nodejs-openshift-ex
+        deploymentconfig: nodejs-openshift-ex
+    spec:
+      containers:
+      - image: docker-registry.default.svc:5000/nodejs-demo/nodejs-openshift-ex:latest
+        imagePullPolicy: Always
+        name: nodejs-openshift-ex
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+      terminationGracePeriodSeconds: 30
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - nodejs-openshift-ex
+      from:
+        kind: ImageStreamTag
+        name: nodejs-openshift-ex:latest
+        namespace: nodejs-demo
+      lastTriggeredImage: docker-registry.default.svc:5000/nodejs-demo/nodejs-openshift-ex:latest
+    type: ImageChange
