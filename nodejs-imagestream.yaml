@@ -1,6 +1,7 @@
+---
 kind: ImageStream
 apiVersion: image.openshift.io/v1
 metadata:
-    name: nodejs-openshift-ex
-      annotations:
-            description: Keeps track of changes in the application image
+  name: nodejs-openshift-ex
+  annotations:
+    description: Keeps track of changes in the application image
