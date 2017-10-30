@@ -1,6 +1,6 @@
 #!groovy
 
-node('node') {
+node {
 
   checkout scm
   
