@@ -5,7 +5,7 @@ node {
   checkout scm
   
   stage('build') {
-    openshiftBuild bldCfg: 'nodejs-openshift-ex', checkForTriggeredDeployments: 'true', namespace: 'nodejs-demo', showBuildLogs: 'true', verbose: 'false', waitTime: '600', waitUnit: 'sec'
+    openshiftBuild bldCfg: 'nodejs-openshift-ex', namespace: 'nodejs-demo', showBuildLogs: 'true', verbose: 'false', waitTime: '300', waitUnit: 'sec'
   }
 
   stage('test') {
